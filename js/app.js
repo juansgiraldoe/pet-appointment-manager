@@ -17,6 +17,11 @@ contenedorCitas = document.querySelector('#citas');
 class Citas {
   constructor(){
     this.citas = [];
+  };
+
+  agregarCita(cita){
+    this.citas = [...this.citas, cita];
+    console.log(this.citas);
   }
 }
 
@@ -89,5 +94,24 @@ function nuevaCita(e) {
     return;
   };
 
+  // Generar un id.
+  citasObj.id = Date.now();
+
+  //Creando cita (Copia que no altera el objeto global).
+  administrarCitas.agregarCita({...citasObj});
+
+  //Reiniciar objeto principal
+  reiniciarObjeto();
+  //Reiniciar formulario.
+  fomrulario.reset();
 
 };
+
+function reiniciarObjeto() {
+  citasObj.mascota = '';
+  citasObj.propietario = '';
+  citasObj.telefono = '';
+  citasObj.fecha = '';
+  citasObj.hora = '';
+  citasObj.sintomas = '';
+}
