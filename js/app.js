@@ -21,7 +21,6 @@ class Citas {
 
   agregarCita(cita){
     this.citas = [...this.citas, cita];
-    console.log(this.citas);
   }
 }
 
@@ -45,8 +44,66 @@ class UI {
     setTimeout(() => {
       divMensaje.remove();
     }, 3000);
-  }
-}
+  };
+  
+  //Destructuring desde los parametros del metodo.
+  imprimirCitas({citas}){
+    this.limpiarHTML();
+    citas.forEach(cita => {
+      const {mascota, propietario, telefono, fecha, hora, sintomas, id} = cita;
+      const divCita = document.createElement('DIV');
+      divCita.classList.add('cita', 'p-3');
+      divCita.dataset.id = id;
+
+      const mascotaParrafo = document.createElement('H2');
+      mascotaParrafo.classList.add('card-title', 'font-weight-bolder');
+      mascotaParrafo.textContent = mascota;
+
+      const propietarioParrafo = document.createElement('P');
+      propietarioParrafo.innerHTML = `
+      <span class="font-weight-bolder">Propietario:</span> ${propietario}
+      `;
+
+      const telefonoParrafo = document.createElement('P');
+      telefonoParrafo.innerHTML = `
+      <span class="font-weight-bolder">Telefono:</span> ${telefono}
+      `;
+
+      const fechaParrafo = document.createElement('P');
+      fechaParrafo.innerHTML = `
+      <span class="font-weight-bolder">Fecha:</span> ${fecha}
+      `;
+
+      const horaParrafo = document.createElement('P');
+      horaParrafo.innerHTML = `
+      <span class="font-weight-bolder">Hora:</span> ${telefono}
+      `;
+
+      const sintomasParrafo = document.createElement('P');
+      sintomasParrafo.innerHTML = `
+      <span class="font-weight-bolder">Sintomas:</span> ${sintomas}
+      `;
+
+      //Crear el div con la informacion.
+      divCita.appendChild(mascotaParrafo);
+      divCita.appendChild(propietarioParrafo);
+      divCita.appendChild(telefonoParrafo);
+      divCita.appendChild(fechaParrafo);
+      divCita.appendChild(horaParrafo);
+      divCita.appendChild(sintomasParrafo);
+
+      //Mostrarlo en el DOM.
+      contenedorCitas.appendChild(divCita);
+
+    });
+  };
+
+  limpiarHTML(){
+    while (contenedorCitas.firstChild) {
+      contenedorCitas.removeChild(contenedorCitas.firstChild);
+    };
+  };
+};
 
 const ui = new UI();
 
@@ -104,7 +161,9 @@ function nuevaCita(e) {
   reiniciarObjeto();
   //Reiniciar formulario.
   fomrulario.reset();
-
+  
+  //Imprimir las citas en el DOM.
+  ui.imprimirCitas(administrarCitas);
 };
 
 function reiniciarObjeto() {
