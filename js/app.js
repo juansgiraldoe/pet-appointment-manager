@@ -21,6 +21,10 @@ class Citas {
 
   agregarCita(cita){
     this.citas = [...this.citas, cita];
+  };
+
+  eliminarCita(id){
+    this.citas = this.citas.filter( cita => cita.id !== id)
   }
 }
 
@@ -43,7 +47,7 @@ class UI {
     //Quitar del DOM despues de 3 seg.
     setTimeout(() => {
       divMensaje.remove();
-    }, 3000);
+    }, 2000);
   };
   
   //Destructuring desde los parametros del metodo.
@@ -84,6 +88,16 @@ class UI {
       <span class="font-weight-bolder">Sintomas:</span> ${sintomas}
       `;
 
+      //Mostrando el boton para eliminar elemento.
+      const btnEliminar = document.createElement('BUTTON');
+      btnEliminar.classList.add('btn', 'btn-danger', 'mr-2');
+      btnEliminar.innerHTML = `Eliminar <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 9.75 14.25 12m0 0 2.25 2.25M14.25 12l2.25-2.25M14.25 12 12 14.25m-2.58 4.92-6.374-6.375a1.125 1.125 0 0 1 0-1.59L9.42 4.83c.21-.211.497-.33.795-.33H19.5a2.25 2.25 0 0 1 2.25 2.25v10.5a2.25 2.25 0 0 1-2.25 2.25h-9.284c-.298 0-.585-.119-.795-.33Z" />
+    </svg>
+    `;
+
+    btnEliminar.onclick = () => eliminarCita(id);
+
       //Crear el div con la informacion.
       divCita.appendChild(mascotaParrafo);
       divCita.appendChild(propietarioParrafo);
@@ -91,6 +105,7 @@ class UI {
       divCita.appendChild(fechaParrafo);
       divCita.appendChild(horaParrafo);
       divCita.appendChild(sintomasParrafo);
+      divCita.appendChild(btnEliminar);
 
       //Mostrarlo en el DOM.
       contenedorCitas.appendChild(divCita);
@@ -173,4 +188,13 @@ function reiniciarObjeto() {
   citasObj.fecha = '';
   citasObj.hora = '';
   citasObj.sintomas = '';
-}
+};
+
+function eliminarCita(id) {
+  //Eliminar la cita.
+  administrarCitas.eliminarCita(id);
+  //Mostrar alerta.
+  ui.imprimirAlerta('La cita se elimino correctamente.');
+  //Refrescar las citas.
+  ui.imprimirCitas(administrarCitas);
+};
