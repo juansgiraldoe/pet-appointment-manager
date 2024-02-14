@@ -26,8 +26,12 @@ class Citas {
 
   eliminarCita(id){
     this.citas = this.citas.filter( cita => cita.id !== id)
+  };
+
+  editarCita(citaActualizada){
+    this.citas = this.citas.map( cita => cita.id === citaActualizada.id ? citaActualizada : cita);
   }
-}
+};
 
 const administrarCitas =new Citas();
 
@@ -81,7 +85,7 @@ class UI {
 
       const horaParrafo = document.createElement('P');
       horaParrafo.innerHTML = `
-      <span class="font-weight-bolder">Hora:</span> ${telefono}
+      <span class="font-weight-bolder">Hora:</span> ${hora}
       `;
 
       const sintomasParrafo = document.createElement('P');
@@ -177,6 +181,8 @@ function nuevaCita(e) {
   
   if (editando) {
     ui.imprimirAlerta('Se edito correctamente.');
+    //Pasar el objeto de la cita a edicion.
+    administrarCitas.editarCita({...citasObj});
     fomrulario.querySelector('button[type="submit"]').textContent = 'Crear cita.';
     editando = false;
   } else {
