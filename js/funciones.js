@@ -1,3 +1,7 @@
+import Citas from "./classes/Citas.js";
+import UI from "./classes/UI.js";
+import { inputMascota, inputPropietario, inputTelefono, inputFecha, inputHora, inputSintomas, formulario } from "./selectores.js"
+
 const administrarCitas =new Citas();
 const ui = new UI();
 
@@ -35,7 +39,7 @@ export function nuevaCita(e) {
     ui.imprimirAlerta('Se edito correctamente.');
     //Pasar el objeto de la cita a edicion.
     administrarCitas.editarCita({...citasObj});
-    fomrulario.querySelector('button[type="submit"]').textContent = 'Crear cita.';
+    formulario.querySelector('button[type="submit"]').textContent = 'Crear cita.';
     editando = false;
   } else {
     // Generar un id.
@@ -52,7 +56,7 @@ export function nuevaCita(e) {
   //Reiniciar objeto principal
   reiniciarObjeto();
   //Reiniciar formulario.
-  fomrulario.reset();
+  formulario.reset();
   
   //Imprimir las citas en el DOM.
   ui.imprimirCitas(administrarCitas);
@@ -98,6 +102,6 @@ export function cargarEdicion(cita) {
   citasObj.id = id;
 
   //Cambiar el texto del boton.
-  fomrulario.querySelector('button[type="submit"]').textContent = 'Guardar cambios.';
+  formulario.querySelector('button[type="submit"]').textContent = 'Guardar cambios.';
   editando = true;
 };

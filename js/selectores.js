@@ -6,5 +6,5 @@ export const inputHora = document.querySelector('#hora');
 export const inputSintomas = document.querySelector('#sintomas');
 
 //Variables de UI.
-export const fomrulario = document.querySelector('#nueva-cita');
+export const formulario = document.querySelector('#nueva-cita');
 export const contenedorCitas = document.querySelector('#citas');

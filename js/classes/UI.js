@@ -1,3 +1,6 @@
+import { eliminarCita,cargarEdicion } from "../funciones.js";
+import { contenedorCitas } from "../selectores.js";
+
 class UI {
   //Imprimir mensaje en el DOM dependiendo de la validación.
   imprimirAlerta(mensaje, tipo){
