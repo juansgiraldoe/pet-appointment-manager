@@ -1,9 +1,7 @@
-fomrulario.addEventListener('submit', nuevaCita);
-let editando;
-
 const administrarCitas =new Citas();
-
 const ui = new UI();
+
+let editando;
 
 //Objeto con info de la cita.
 const citasObj = {
@@ -15,24 +13,13 @@ const citasObj = {
   sintomas: '',
 };
 
-//Registro de eventos.
-eventListeners();
-function eventListeners() {
-  inputMascota.addEventListener('input', datosCita);
-  inputPropietario.addEventListener('input', datosCita);
-  inputTelefono.addEventListener('input', datosCita);
-  inputFecha.addEventListener('input', datosCita);
-  inputHora.addEventListener('input', datosCita);
-  inputSintomas.addEventListener('input', datosCita);
-};
-
 //Lectura los datos y los agregar a citaObj.
-function datosCita(e) {
+export function datosCita(e) {
   citasObj[e.target.name] = e.target.value;
 
 };
 
-function nuevaCita(e) {
+export function nuevaCita(e) {
   e.preventDefault();
 
   //Estraer la informacion del objeto global de citas.
@@ -71,7 +58,7 @@ function nuevaCita(e) {
   ui.imprimirCitas(administrarCitas);
 };
 
-function reiniciarObjeto() {
+export function reiniciarObjeto() {
   citasObj.mascota = '';
   citasObj.propietario = '';
   citasObj.telefono = '';
@@ -80,7 +67,7 @@ function reiniciarObjeto() {
   citasObj.sintomas = '';
 };
 
-function eliminarCita(id) {
+export function eliminarCita(id) {
   //Eliminar la cita.
   administrarCitas.eliminarCita(id);
   //Mostrar alerta.
@@ -90,7 +77,7 @@ function eliminarCita(id) {
 };
 
 //Carga los datos y modo edición.
-function cargarEdicion(cita) {
+export function cargarEdicion(cita) {
   const {mascota, propietario, telefono, fecha, hora, sintomas, id} = cita;
   
   //Llenar los inputs.
