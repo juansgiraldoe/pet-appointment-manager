@@ -5,6 +5,7 @@ import { inputMascota, inputPropietario, inputTelefono, inputFecha, inputHora, i
 const administrarCitas =new Citas();
 const ui = new UI();
 
+let dataBase;
 let editando;
 
 //Objeto con info de la cita.
@@ -104,4 +105,37 @@ export function cargarEdicion(cita) {
   //Cambiar el texto del boton.
   formulario.querySelector('button[type="submit"]').textContent = 'Guardar cambios.';
   editando = true;
+};
+
+export function crearDB() {
+  //Creamos la base de datos V1.0
+  const crearDataBase = window.indexedDB.open('citas', 1);
+
+  //Error.
+  crearDataBase.onerror = function () {
+    console.log('Hubo un error.');
+  };
+
+  //Bien.
+  crearDataBase.onsuccess = function () {
+    console.log('BD creada.');
+    dataBase = crearDataBase.result;
+  };
+
+  //Definir esquema.
+  crearDataBase.onupgradeneeded = function (e) {
+    const db = e.target.result;
+    const objectStore = db.createObjectStore('citas', {
+      keyPath: 'id',
+      autoIncrement: true,
+    });
+    objectStore.createIndex('mascota', 'mascota', {unique: false});
+    objectStore.createIndex('propietario', 'propietario', {unique: false});
+    objectStore.createIndex('telefono', 'telefono', {unique: false});
+    objectStore.createIndex('fecha', 'fecha', {unique: false});
+    objectStore.createIndex('hora', 'hora', {unique: false});
+    objectStore.createIndex('id', 'id', {unique: true});
+
+    console.log('Base de datos creada y lista.');
+  };
 };

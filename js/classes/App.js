@@ -1,4 +1,4 @@
-import { datosCita, nuevaCita } from "../funciones.js";
+import { datosCita, nuevaCita, crearDB } from "../funciones.js";
 import { inputMascota, inputPropietario, inputTelefono, inputFecha, inputHora, inputSintomas, formulario } from "../selectores.js";
 
 class App {
@@ -6,6 +6,9 @@ class App {
     this.initApp();
   };
   initApp(){
+    window.onload = ()=> {
+      crearDB();
+    }
   inputMascota.addEventListener('input', datosCita);
   inputPropietario.addEventListener('input', datosCita);
   inputTelefono.addEventListener('input', datosCita);
