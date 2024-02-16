@@ -49,8 +49,20 @@ export function nuevaCita(e) {
     //Creando cita (Copia que no altera el objeto global).
     administrarCitas.agregarCita({...citasObj});
 
-    //Mensaje de notificación.
-    ui.imprimirAlerta('Se agrego correctamente.');
+    //Insertar registro en IndexDB.
+    const transaction = dataBase.transaction(['citas'], 'readwrite');
+
+    //Habilitar el objectStore.
+    const objectStore = transaction.objectStore('citas');
+    
+    //Insertar en la base de datos.
+    objectStore.add(citasObj);
+    
+    transaction.oncomplete = () => {
+      console.log('Cita agregada a indexdb.');
+      //Mensaje de notificación.
+      ui.imprimirAlerta('Se agrego correctamente.');
+    }
   }
   
   
@@ -134,6 +146,7 @@ export function crearDB() {
     objectStore.createIndex('telefono', 'telefono', {unique: false});
     objectStore.createIndex('fecha', 'fecha', {unique: false});
     objectStore.createIndex('hora', 'hora', {unique: false});
+    objectStore.createIndex('sintomas', 'sintomas', {unique: true});
     objectStore.createIndex('id', 'id', {unique: true});
 
     console.log('Base de datos creada y lista.');
